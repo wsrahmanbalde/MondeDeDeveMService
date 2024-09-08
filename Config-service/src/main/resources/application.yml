@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: Config-service
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/Configurations
+
+server:
+  port: 9999
+
+
+
