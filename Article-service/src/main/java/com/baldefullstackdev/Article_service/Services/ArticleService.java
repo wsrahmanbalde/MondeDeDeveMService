@@ -11,7 +11,7 @@ public interface ArticleService {
     ResponseFindArticle findArticleById(Long id);
     List<ResponseFindArticle> findAllArticles();
     ResponseArticle addArticle(RequestArticle requestArticle);
-    ResponseArticle updateArticle(Long id,RequestArticle requestArticle);
+    ResponseArticle updateArticle(Long id, RequestArticle requestArticle);
     ResponseArticle deleteArticle(Long id);
 
     ResponseFindArticle convertArticleToDto(Article article);

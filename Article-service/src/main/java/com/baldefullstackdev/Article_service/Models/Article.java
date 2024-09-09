@@ -38,7 +38,6 @@ public class Article {
     private LocalDateTime create_at;
 
     @LastModifiedDate
-    @Column(insertable = false)
     @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDateTime update_at;
 

@@ -40,7 +40,7 @@ public class ArticleServiceImpl implements ArticleService{
         articleRepository.save(article);
         return ResponseArticle
                 .builder()
-                .message("Ajout effectué avec succès")
+                .message("Ajout effectué avec succès add")
                 .build();
     }
 
@@ -54,10 +54,14 @@ public class ArticleServiceImpl implements ArticleService{
                     .build();
         }
 
-        articleRepository.save(convertDtoToArticle(requestArticle));
+        Article newArticle = convertDtoToArticle(requestArticle);
+        newArticle.setArticleId(id);
+        newArticle.setCreate_at(articleRepository.findById(id).get().getCreate_at());
+        newArticle.setUpdate_at(LocalDateTime.now());
+        articleRepository.save(newArticle);
         return ResponseArticle
                 .builder()
-                .message("Ajout effectué avec succès")
+                .message("Mise a jour effectué avec succès")
                 .build();
     }
 
