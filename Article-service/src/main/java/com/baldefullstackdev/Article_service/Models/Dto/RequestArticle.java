@@ -1,6 +1,8 @@
 package com.baldefullstackdev.Article_service.Models.Dto;
 
+import com.baldefullstackdev.Article_service.Client.ThemeClient;
 import jakarta.persistence.Column;
+import jakarta.persistence.Transient;
 import lombok.*;
 
 @Getter

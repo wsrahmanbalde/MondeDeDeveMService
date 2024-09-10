@@ -1,5 +1,7 @@
 package com.baldefullstackdev.Article_service.Services;
 
+import com.baldefullstackdev.Article_service.Client.ThemeClient;
+import com.baldefullstackdev.Article_service.Client.ThemeRestClient;
 import com.baldefullstackdev.Article_service.Models.Article;
 import com.baldefullstackdev.Article_service.Models.Dto.RequestArticle;
 import com.baldefullstackdev.Article_service.Models.Dto.ResponseArticle;
@@ -20,21 +22,44 @@ public class ArticleServiceImpl implements ArticleService{
 
     private final ArticleRepository articleRepository;
     private final ModelMapper modelMapper;
+    private final ThemeRestClient themeRestClient;
     @Override
     public ResponseFindArticle findArticleById(Long id) {
-        return convertArticleToDto(articleRepository.findById(id).get());
+        if(articleRepository.findById(id).isEmpty()){
+            return ResponseFindArticle.builder().build();
+        }
+        ResponseFindArticle responseFindArticle = convertArticleToDto(articleRepository.findById(id).get());
+        responseFindArticle.setThemeClient(themeRestClient.findTheme(responseFindArticle.getTopic()));
+        return responseFindArticle;
     }
 
     @Override
     public List<ResponseFindArticle> findAllArticles() {
-        return articleRepository.findAll()
+
+        if(articleRepository.findAll().isEmpty()){
+            return List.of();
+        }
+        List<ResponseFindArticle> responseFindArticles =
+            articleRepository.findAll()
                 .stream()
                 .map(this::convertArticleToDto)
-                .collect(Collectors.toList());
+                .toList();
+
+                responseFindArticles.forEach(theme->{
+                    theme.setThemeClient(themeRestClient.findTheme(theme.getTopic()));
+                });
+        return responseFindArticles;
     }
 
     @Override
     public ResponseArticle addArticle(RequestArticle requestArticle) {
+        ThemeClient themeClient = themeRestClient.findTheme(requestArticle.getTopic());
+        if(themeClient.getThemeId() == null){
+            return ResponseArticle
+                    .builder()
+                    .message("Le topic utilisé n'existe pas")
+                    .build();
+        }
         Article article = convertDtoToArticle(requestArticle);
         article.setCreate_at(LocalDateTime.now());
         articleRepository.save(article);
@@ -79,7 +104,6 @@ public class ArticleServiceImpl implements ArticleService{
                 .builder()
                 .message("Suppression effectué avec succès ")
                 .build();
-
     }
 
     @Override

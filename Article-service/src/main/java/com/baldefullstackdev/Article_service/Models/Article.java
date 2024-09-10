@@ -1,5 +1,6 @@
 package com.baldefullstackdev.Article_service.Models;
 
+import com.baldefullstackdev.Article_service.Client.ThemeClient;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,6 +29,9 @@ public class Article {
 
     @Column(nullable = false)
     private Long topic;
+
+    @Transient
+    private ThemeClient themeClient;
 
     @Column(nullable = false)
     private Long auteur;

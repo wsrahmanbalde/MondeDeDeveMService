@@ -1,7 +1,9 @@
 package com.baldefullstackdev.Article_service.Models.Dto;
 
+import com.baldefullstackdev.Article_service.Client.ThemeClient;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
+import jakarta.persistence.Transient;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -23,7 +25,8 @@ public class ResponseFindArticle {
 
     private Long topic;
 
-    private Long auteur;
+    private ThemeClient themeClient;
+
 
     @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDateTime create_at;
