@@ -1,0 +1,27 @@
+server:
+  port: 8085
+  servlet:
+    context: /api
+  forward-headers-strategy: framework
+spring:
+  application:
+    name: Security-service
+  main:
+    allow-circular-references: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/MondeDeDev
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+
+springdoc:
+  pathsToMatch: /api/auth/** , /api/**

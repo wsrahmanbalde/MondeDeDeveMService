@@ -18,6 +18,7 @@
         <module>Gateway-service</module>
         <module>Discovery-service</module>
         <module>Config-service</module>
+        <module>Security-service</module>
     </modules>
 
     <properties>
